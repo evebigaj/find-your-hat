@@ -1,3 +1,5 @@
+//todo add percent of holes (and cap it?)
+//ambitious todo: make the boards winnable
 //todo: put this inside the class so that you can run game on a constructor?
 
 const prompt = require('prompt-sync')({sigint: true});
@@ -16,8 +18,46 @@ class Field {
         console.log(this.field[i].join(''))
       }
     }
+/* * in top lh corner
+^ in just one place
+w and h random but <15
+random number of other things
+*/
+    static generateField(){
+        let width = Math.floor(Math.random()*15+1);
+        let height = Math.floor(Math.random()*15+1);
+        let xHat = Math.floor(Math.random()*width);
+        let yHat = Math.floor(Math.random()*height);
+        //range: [0,30)
+        let percentHole = Math.random()*30
+        let field = [];
+       //how to do weighted probability?
+       //p(hole) < .3
+       //p(fieldCharacter) >= 0.7 
+       // one option: take random number from 0 to 100. if it's between
+       // 0 and p(hole), make it other 
+        for(let i = 0; i < height; i++){ field[i] = [];
+            for(let j = 0; j< width; j++){
+                let random = Math.floor(Math.random()*2);
+                let element = ''
+                switch(random){case 0: element = hole;
+                    break;
+                    case 1: element = fieldCharacter;
+                    break;
+                }
+                field[i].push(element)
+            }
+        }
+        field[yHat][xHat] = hat;
+        field[0][0] = '*';
+        return field
+
+        
+    }
     
   }
+
+  
   
   // When a user runs main.js,
     // prompt for input 
@@ -30,13 +70,12 @@ class Field {
 // Attempts to move “outside” the field.
 //these terminate the game with game over message
 
-const myField = new Field([
-    ['*', '░', 'O'],
-    ['░', 'O', '░'],
-    ['░', '^', '░'],
-  ]);
+//const myField = new Field();
 
-  myField.print()
+let testField = Field.generateField()
+myField = new Field(testField);
+myField.print()
+
 
 
 
@@ -46,18 +85,9 @@ const myField = new Field([
 //up and down: move to other array at same index
 //how to find index of '*'? 
 
-let testField = myField.field
-
-//array.includes
-//array.findIndex
-
 let state = 'alive'
 let y = testField.findIndex(array => array.includes('*'))
 let x = testField[y].findIndex(element => element === '*')
-
-
-//var dir = ['j','l','i','k'][Math.floor(Math.random()*4)]
-//var dir = 'l'
 
 do {
     var dir = prompt('Which direction?')
