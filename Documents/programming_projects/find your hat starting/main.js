@@ -23,26 +23,30 @@ class Field {
 w and h random but <15
 random number of other things
 */
+//current bug: hat is moving
+//check if this recurs with other widths?
+//and up didn't work on second time??
+//run 2: there are no holes and special characters are invisible
     static generateField(){
         let width = Math.floor(Math.random()*15+1);
         let height = Math.floor(Math.random()*15+1);
         let xHat = Math.floor(Math.random()*width);
         let yHat = Math.floor(Math.random()*height);
         //range: [0,30)
-        let percentHole = Math.random()*30
+        let probHole = Math.random()*30
         let field = [];
-       //how to do weighted probability?
-       //p(hole) < .3
-       //p(fieldCharacter) >= 0.7 
-       // one option: take random number from 0 to 100. if it's between
+       // take random number from 0 to 100. if it's between
        // 0 and p(hole), make it other 
         for(let i = 0; i < height; i++){ field[i] = [];
-            for(let j = 0; j< width; j++){
-                let random = Math.floor(Math.random()*2);
+            for(let j = 0; j< width; j++){ 
+                let random = Math.random()*100
+              
+
+                //let random = Math.floor(Math.random()*2);
                 let element = ''
-                switch(random){case 0: element = hole;
+                switch(random <= probHole){case true: element = hole;
                     break;
-                    case 1: element = fieldCharacter;
+                    case false: element = fieldCharacter;
                     break;
                 }
                 field[i].push(element)
