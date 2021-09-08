@@ -1,4 +1,3 @@
-//todo add percent of holes (and cap it?)
 //ambitious todo: make the boards winnable
 //todo: put this inside the class so that you can run game on a constructor?
 
@@ -8,7 +7,7 @@ const hat = '^';
 const hole = 'O';
 const fieldCharacter = '░';
 const pathCharacter = '*';
-
+ 
 class Field {
     constructor(field){
       this.field = field
